@@ -23,6 +23,7 @@ namespace ArduinoTest
         private void Form1_Load(object sender, EventArgs e)
         {
             buttonConnect.Enabled = false;
+            label1.Text = "0";
         }
 
         void btnStatus() {
@@ -115,6 +116,15 @@ namespace ArduinoTest
                     buttonConnect.Enabled = true;
                 }
             }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            
+                var v=trackBar1.Value.ToString();
+            label1.Text = v;
+            serialPort.WriteLine(v);
+
         }
     }
 }
