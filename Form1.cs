@@ -129,29 +129,42 @@ namespace ArduinoTest
     }
 }
 /*
- Скетч для приёма сообщений.
+ //Скетч для приёма сообщений.
 
 
 char commandValue; // данные, поступаемые с последовательного порта
-int ledPin = 13; // встроенный светодиод
+int ledPinA = 3; 
+int ledPinB = 5; 
+String data="";
 
 void setup() {
-  pinMode(ledPin, OUTPUT); // режим на вывод данных
+  pinMode(ledPinA, OUTPUT); // режим на вывод данных
+   pinMode(ledPinB, OUTPUT); // режим на вывод данных
+   analogWrite(ledPinA,0);
+   analogWrite(ledPinB,255);
   Serial.begin(9600);
 }
 
 void loop() {
   if (Serial.available()) {
-    commandValue = Serial.read();
+    commandValue = (char)Serial.read();
+    if(commandValue !='\n')
+    data +=commandValue;
+    else{
+      
+      analogWrite(ledPinA,data.toInt());
+      analogWrite(ledPinB,255-data.toInt());
+      data="";
+      }
   }
 
-  if (commandValue == '1') {
-    digitalWrite(ledPin, HIGH); // включаем светодиод
-  }
-  else {
-    digitalWrite(ledPin, LOW); // в противном случае выключаем
-  }
-  delay(10); // задержка перед следующим чтением данных
+//  if (commandValue == '1') {
+//    digitalWrite(ledPin, HIGH); // включаем светодиод
+//  }
+//  else {
+//    digitalWrite(ledPin, LOW); // в противном случае выключаем
+//  }
+//  delay(10); // задержка перед следующим чтением данных
 }
 
  */
