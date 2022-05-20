@@ -22,7 +22,7 @@ namespace ArduinoTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            buttonConnect.Enabled = false;
         }
 
         void btnStatus() {
@@ -53,14 +53,23 @@ namespace ArduinoTest
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            if (!isConnected)
+            try
             {
-                connectToArduino();
+                if (!isConnected)
+                {
+                    connectToArduino();
+                    comboBoxCom.Enabled = false;
+                }
+                else
+                {
+                    disconnectFromArduino();
+                    comboBoxCom.Enabled = true;
+                }
             }
-            else
-            {
-                disconnectFromArduino();
-            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "ERROR");  
+            
+            } 
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -92,6 +101,7 @@ namespace ArduinoTest
             // Проверяем есть ли доступные
             if (portnames.Length == 0)
             {
+                buttonConnect.Enabled = false;
                 MessageBox.Show("COM PORT not found");
             }
             foreach (string portName in portnames)
@@ -102,6 +112,7 @@ namespace ArduinoTest
                 if (portnames[0] != null)
                 {
                     comboBoxCom.SelectedItem = portnames[0];
+                    buttonConnect.Enabled = true;
                 }
             }
         }
