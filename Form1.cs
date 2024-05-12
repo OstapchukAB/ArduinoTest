@@ -39,6 +39,11 @@ namespace ArduinoTest
             string selectedPort = comboBoxCom.GetItemText(comboBoxCom.SelectedItem);
             serialPort.PortName = selectedPort;
             serialPort.Open();
+
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("9");
+            }
             btnStatus();
             buttonConnect.Text = "Disconnect";
         }
@@ -46,6 +51,10 @@ namespace ArduinoTest
         private void disconnectFromArduino()
         {
             isConnected = false;
+            if (serialPort.IsOpen)
+            {
+                serialPort.Write("8");
+            }
             serialPort.Close();
             buttonConnect.Text = "Connect";
             btnStatus();
@@ -121,10 +130,26 @@ namespace ArduinoTest
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             
-                var v=trackBar1.Value.ToString();
-            label1.Text = v;
-            serialPort.WriteLine(v);
+            //    var v=trackBar1.Value.ToString();
+            //label1.Text = v;
+            //serialPort.WriteLine(v);
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (isConnected)
+            {
+                serialPort.Write("2");
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (isConnected)
+            {
+                serialPort.Write("3");
+            }
         }
     }
 }
